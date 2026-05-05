@@ -1,0 +1,12 @@
+# すべてのテキストファイルを LF に統一
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.svg binary
+
+# Windows のバッチファイルは CRLF にしたい場合
+#*.bat text eol=crlf

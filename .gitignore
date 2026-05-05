@@ -1,0 +1,39 @@
+# VSCode settings
+.vscode/
+
+# Intermediate build files
+**/out/
+!/out/
+!/out/main.pdf
+
+# LaTeX and other intermediate files
+*.log
+*.out
+*.synctex.gz
+*.aux
+*.toc
+*main-plantuml.*
+**/.ipynb_checkpoints/
+
+# python
+__pycache__/
+*.pyc
+.python-version
+.venv/
+
+# Node.js dependencies
+node_modules/
+
+# textlint result
+*output.txt 
+*output_debug.txt
+textlint_result.txt
+#svg related files
+**/svg-inkscape/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+#user setting
+.env
