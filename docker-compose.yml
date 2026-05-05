@@ -1,0 +1,12 @@
+services:
+  test_env:
+    build: .
+    container_name: estat-app
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/app
+    # dns と network_mode は同じ階層（左端を揃える）にする必要があります
+    dns:
+      - 8.8.8.8
+    network_mode: "bridge"
