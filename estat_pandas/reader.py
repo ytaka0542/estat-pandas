@@ -8,7 +8,7 @@ import requests
 class EStatReader(_BaseReader):
     _BASE_URL = "https://api.e-stat.go.jp/rest/3.0/app/json/"
 
-    def __init__(self, symbols, api_key=None, lang="jp", **kwargs):
+    def __init__(self, symbols, api_key=None, lang="jp", start=None, end=None, **kwargs):
         # 1. PDR（親クラス）が認識できる標準的な引数リスト
         # これらは super().__init__ に渡す
         pdr_standard_args = [
@@ -33,6 +33,8 @@ class EStatReader(_BaseReader):
         self.api_key = api_key
         self.lang = "J" if lang == "jp" else "E"
         self.ext_params = estat_kwargs
+        self.start = start
+        self.end = end
 
     @property
     def url(self):
@@ -84,6 +86,10 @@ class EStatReader(_BaseReader):
         # 4. 時間変換
         df["DATE"] = df["@time"].apply(self._estat_time_to_date)
         df["period_type"] = df["@time"].apply(self._estat_time_type)
+        if self.start is not None:
+            df = df[df["DATE"] >= self.start]
+        if self.end is not None:
+            df = df[df["DATE"] <= self.end]
 
         # 5. 四半期計算
         df = self._add_quarter_rows(df)
@@ -150,8 +156,15 @@ class EStatReader(_BaseReader):
             if g_month.empty: continue
             g_month["$"] = pd.to_numeric(g_month["$"], errors="coerce")
             m = g_month.set_index("DATE")["$"] / 100
-            q = (1 + m).resample("QS-JAN").prod() - 1
-            q = q * 100
+            # --- %か否か ---
+            if g_month["@unit"].iloc[0] in ["%", "％"]:
+                # パーセント → 四半期リターン（複利）
+                m = m / 100
+                q = (1 + m).resample("QS-JAN").prod() - 1
+                q = q * 100
+            else:
+                # パーセント以外 → 四半期平均
+                q = m.resample("QS-JAN").mean()
             for date, value in q.items():
                 row = {"DATE": date, "$": value, "period_type": "quarter"}
                 for col in group_keys + label_cols: row[col] = g.iloc[0][col]
