@@ -15,7 +15,6 @@ class EStatReader(_BaseReader):
             "start", "end", "retry_count", "pause", 
             "timeout", "session", "chunksize"
         ]
-
         # 2. 引数を「PDR用」と「e-Stat（その他）用」に自動仕分け
         pdr_kwargs = {}
         estat_kwargs = {}
@@ -159,7 +158,6 @@ class EStatReader(_BaseReader):
             # --- %か否か ---
             if g_month["@unit"].iloc[0] in ["%", "％"]:
                 # パーセント → 四半期リターン（複利）
-                m = m / 100
                 q = (1 + m).resample("QS-JAN").prod() - 1
                 q = q * 100
             else:
