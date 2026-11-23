@@ -11,7 +11,7 @@ from .errors import CatalogError, DatasetNotFoundError
 
 
 _CATALOG_PATH = Path(__file__).with_name("catalog.json")
-_PROVIDERS = {"estat", "boj", "csv"}
+_PROVIDERS = {"estat", "boj", "csv", "estat_excel"}
 _FREQUENCIES = {
     "daily",
     "monthly",
@@ -59,6 +59,21 @@ _SOURCE_FIELDS = {
             "retry_count",
             "classification_columns",
         },
+    },
+    "estat_excel": {
+        "required": {
+            "provider",
+            "stats_code",
+            "search_word",
+            "table_no",
+            "series_code",
+            "sheet_name",
+            "skiprows",
+            "year_column_index",
+            "month_column_index",
+            "value_column_index",
+        },
+        "optional": {"timeout", "retry_count"},
     },
 }
 
@@ -323,7 +338,7 @@ def _validate_dataset(key, raw):
                 f"{context}.classifications.series.code must match "
                 "source.series_code"
             )
-    else:
+    elif provider == "csv":
         _require_string(source["url"], "url", context)
         _require_string(source["series_code"], "series_code", context)
         parsed_url = urlparse(source["url"])
@@ -359,6 +374,38 @@ def _validate_dataset(key, raw):
             raise CatalogError(
                 f"{context}.source.classification_columns must map every "
                 "catalog classification"
+            )
+    else:
+        for field in ("stats_code", "search_word", "table_no", "series_code", "sheet_name"):
+            _require_string(source[field], field, context)
+        if len(source["stats_code"]) != 8 or not source["stats_code"].isdigit():
+            raise CatalogError(
+                f"{context}.source.stats_code must be an 8-digit string"
+            )
+        column_indexes = [
+            source["year_column_index"],
+            source["month_column_index"],
+            source["value_column_index"],
+        ]
+        if any(
+            not isinstance(index, int) or isinstance(index, bool) or index < 0
+            for index in column_indexes
+        ):
+            raise CatalogError(
+                f"{context}.source Excel column indexes must be "
+                "non-negative integers"
+            )
+        if len(set(column_indexes)) != len(column_indexes):
+            raise CatalogError(
+                f"{context}.source Excel column indexes must be distinct"
+            )
+        if (
+            not isinstance(source["skiprows"], int)
+            or isinstance(source["skiprows"], bool)
+            or source["skiprows"] < 0
+        ):
+            raise CatalogError(
+                f"{context}.source.skiprows must be a non-negative integer"
             )
 
     return DatasetSpec(

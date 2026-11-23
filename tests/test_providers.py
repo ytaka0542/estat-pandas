@@ -1,13 +1,16 @@
 import unittest
+from io import BytesIO
 from unittest.mock import Mock, patch
 
 import pandas as pd
+from openpyxl import Workbook
 
 from estat_pandas import DatasetSpec, ProviderError
 from estat_pandas.errors import DataValidationError
 from estat_pandas.providers.boj import BOJProvider
 from estat_pandas.providers.csv import CSVProvider
 from estat_pandas.providers.estat import EStatProvider
+from estat_pandas.providers.excel import EStatExcelProvider
 
 
 class ProviderTests(unittest.TestCase):
@@ -64,6 +67,147 @@ class ProviderTests(unittest.TestCase):
             ["コア指数"],
         )
         self.assertEqual(reader_class.call_args.kwargs["cdTab"], "3")
+
+    def test_estat_excel_provider_resolves_latest_url_and_parses_series(self):
+        workbook = Workbook()
+        sheet = workbook.active
+        sheet.title = "季節調整値"
+        sheet["A11"] = "昭和63年"
+        sheet["C11"] = "Jan."
+        sheet["T11"] = 2.7
+        sheet["A12"] = 1988
+        sheet["C12"] = "Feb."
+        sheet["T12"] = 2.6
+        sheet["A13"] = "平成元年"
+        sheet["C13"] = "Jan."
+        sheet["T13"] = 2.3
+        sheet["A14"] = 1989
+        sheet["C14"] = "Feb."
+        sheet["T14"] = 2.4
+        sheet["C15"] = "Mar."
+        sheet["T15"] = "…"
+        sheet["C16"] = "Apr."
+        sheet["A17"] = "令和 8年"
+        sheet["C17"] = "Jan."
+        sheet["T17"] = 2.7
+        sheet["A18"] = 2026
+        sheet["C18"] = "Feb."
+        sheet["T18"] = 2.6
+        content = BytesIO()
+        workbook.save(content)
+        file_response = Mock(content=content.getvalue())
+
+        def catalog_item(release_date, url):
+            return {
+                "@id": release_date.replace("-", ""),
+                "DATASET": {"RELEASE_DATE": release_date},
+                "RESOURCES": {
+                    "RESOURCE": [
+                        {
+                            "FORMAT": "XLS",
+                            "TITLE": {
+                                "TABLE_NO": "1-a-1",
+                                "TABLE_NAME": "主要項目、完全失業率",
+                            },
+                            "RELEASE_DATE": release_date,
+                            "URL": url,
+                        }
+                    ]
+                },
+            }
+
+        def catalog_response(items):
+            return {
+                "GET_DATA_CATALOG": {
+                    "RESULT": {"STATUS": "0"},
+                    "DATA_CATALOG_LIST_INF": {
+                        "NUMBER": "3",
+                        "DATA_CATALOG_INF": items,
+                    },
+                }
+            }
+
+        old_url = "https://www.e-stat.go.jp/stat-search/file-download?statInfId=old"
+        latest_url = (
+            "https://www.e-stat.go.jp/stat-search/file-download?statInfId=latest"
+        )
+        older_item = catalog_item("2026-09-30", old_url)
+        other_item = {
+            "@id": "other",
+            "DATASET": {"RELEASE_DATE": "2026-10-31"},
+            "RESOURCES": {"RESOURCE": []},
+        }
+        latest_item = catalog_item("2026-10-30", latest_url)
+        spec = DatasetSpec(
+            key="JPN_UNEMPLOYMENT_RATE_MONTHLY_SA",
+            title="Seasonally adjusted unemployment rate",
+            source={
+                "provider": "estat_excel",
+                "stats_code": "00200531",
+                "search_word": "失業率",
+                "table_no": "1-a-1",
+                "series_code": "JPN_UNEMPLOYMENT_RATE_MONTHLY_SA",
+                "sheet_name": "季節調整値",
+                "skiprows": 10,
+                "year_column_index": 0,
+                "month_column_index": 2,
+                "value_column_index": 19,
+            },
+            unit="％",
+            frequency="monthly",
+            seasonal_adjustment="seasonally_adjusted",
+            classifications={
+                "area": {"code": "00000", "label": "全国"},
+                "sex": {"code": "0", "label": "男女計"},
+            },
+        )
+
+        with (
+            patch.dict("os.environ", {"ESTAT_APP_ID": "test-key"}),
+            patch(
+                "estat_pandas.providers.excel._DATA_CATALOG_PAGE_SIZE",
+                2,
+            ),
+            patch(
+                "estat_pandas.providers.excel.get_json",
+                side_effect=[
+                    catalog_response([older_item, other_item]),
+                    catalog_response([latest_item]),
+                ],
+            ) as get_json,
+            patch(
+                "estat_pandas.providers.excel.get_response",
+                return_value=file_response,
+            ) as get_response,
+        ):
+            result = EStatExcelProvider().fetch(spec, None, None)
+
+        self.assertEqual(get_json.call_count, 2)
+        self.assertEqual(
+            get_json.call_args_list[1].kwargs["params"]["startPosition"],
+            "3",
+        )
+        self.assertEqual(get_response.call_args.args[0], latest_url)
+        self.assertEqual(
+            result["DATE"].tolist(),
+            list(
+                pd.to_datetime(
+                    [
+                        "1988-01-01",
+                        "1988-02-01",
+                        "1989-01-01",
+                        "1989-02-01",
+                        "1989-03-01",
+                        "2026-01-01",
+                        "2026-02-01",
+                    ]
+                )
+            ),
+        )
+        self.assertEqual(
+            result["value"].tolist(),
+            [2.7, 2.6, 2.3, 2.4, "…", 2.7, 2.6],
+        )
 
     def test_estat_provider_joins_explicit_segments_as_one_series(self):
         spec = DatasetSpec(

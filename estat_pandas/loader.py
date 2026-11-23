@@ -4,13 +4,14 @@ import pandas as pd
 
 from .catalog import DatasetSpec, get_dataset_spec
 from .errors import DataValidationError, NoDataError
-from .providers import BOJProvider, CSVProvider, EStatProvider
+from .providers import BOJProvider, CSVProvider, EStatExcelProvider, EStatProvider
 
 
 _PROVIDERS = {
     "estat": EStatProvider(),
     "boj": BOJProvider(),
     "csv": CSVProvider(),
+    "estat_excel": EStatExcelProvider(),
 }
 _MISSING_VALUES = {"", "-", "－", "–", "—", "…", "...", "秘匿"}
 _CANONICAL_COLUMNS = [

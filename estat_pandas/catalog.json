@@ -421,6 +421,34 @@
         }
       }
     },
+    "JPN_UNEMPLOYMENT_RATE_MONTHLY_SA": {
+      "title": "労働力調査・完全失業率（季節調整値、全国・男女計、月次・1953年1月～）",
+      "source": {
+        "provider": "estat_excel",
+        "stats_code": "00200531",
+        "search_word": "失業率",
+        "table_no": "1-a-1",
+        "series_code": "JPN_UNEMPLOYMENT_RATE_MONTHLY_SA",
+        "sheet_name": "季節調整値",
+        "skiprows": 10,
+        "year_column_index": 0,
+        "month_column_index": 2,
+        "value_column_index": 19
+      },
+      "unit": "％",
+      "frequency": "monthly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "sex": {
+          "code": "0",
+          "label": "男女計"
+        }
+      }
+    },
     "JPN_EMPLOYMENT_RATE": {
       "title": "労働力人口比率，就業率及び完全失業率（2000年1-3月期～）",
       "source": {
