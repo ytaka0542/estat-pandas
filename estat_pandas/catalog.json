@@ -381,6 +381,46 @@
         }
       }
     },
+    "JPN_UNEMPLOYMENT_RATE_MONTHLY": {
+      "title": "労働力人口比率，就業率及び完全失業率（月次・2000年1月～）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003005865",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "02",
+          "cdCat01": "000",
+          "cdCat02": "08",
+          "cdCat03": "0"
+        },
+        "lang": "jp"
+      },
+      "unit": "％",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "02",
+          "label": "率"
+        },
+        "cat01": {
+          "code": "000",
+          "label": "全産業"
+        },
+        "cat02": {
+          "code": "08",
+          "label": "完全失業者"
+        },
+        "cat03": {
+          "code": "0",
+          "label": "総数"
+        }
+      }
+    },
     "JPN_EMPLOYMENT_RATE": {
       "title": "労働力人口比率，就業率及び完全失業率（2000年1-3月期～）",
       "source": {

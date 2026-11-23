@@ -29,6 +29,21 @@ class CatalogTests(unittest.TestCase):
             unemployment.seasonal_adjustment,
             "not_seasonally_adjusted",
         )
+        monthly_unemployment = catalog["JPN_UNEMPLOYMENT_RATE_MONTHLY"]
+        self.assertEqual(monthly_unemployment.frequency, "monthly")
+        self.assertEqual(monthly_unemployment.unit, "％")
+        self.assertEqual(
+            monthly_unemployment.seasonal_adjustment,
+            "not_seasonally_adjusted",
+        )
+        self.assertEqual(
+            monthly_unemployment.source["stats_data_id"],
+            "0003005865",
+        )
+        self.assertEqual(
+            monthly_unemployment.source["filters"]["cdCat02"],
+            "08",
+        )
 
     def test_gdp_series_use_current_2020_base_seasonally_adjusted_tables(self):
         catalog = load_catalog()

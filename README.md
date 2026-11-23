@@ -44,8 +44,8 @@ Registered series cover:
   seasonally adjusted, quarterly)
 - Prices: headline CPI, CPI excluding fresh food, and CPI excluding fresh food
   and energy (year-over-year, monthly)
-- Labor: unemployment, employment, and labor-force participation rates
-  (quarterly)
+- Labor: unemployment rate (monthly and quarterly), employment, and
+  labor-force participation rates (quarterly)
 - Population: national total population (`JPN_POPULATION_TOTAL`), with monthly
   census-base vintages joined at explicit, non-overlapping date boundaries
 - Money: M2 and seasonally adjusted monetary base (monthly)
