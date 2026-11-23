@@ -25,6 +25,12 @@ cpi = load(
 )
 
 print(cpi[["DATE", "value", "unit", "frequency"]])
+
+population = load(
+    "JPN_POPULATION_TOTAL",
+    start="2010-01-01",
+    end="2025-12-01",
+)
 ```
 
 Catalog keys use descriptive, FRED-inspired `JPN_<CONCEPT>_<DETAIL>` names.
@@ -40,6 +46,8 @@ Registered series cover:
   and energy (year-over-year, monthly)
 - Labor: unemployment, employment, and labor-force participation rates
   (quarterly)
+- Population: national total population (`JPN_POPULATION_TOTAL`), with monthly
+  census-base vintages joined at explicit, non-overlapping date boundaries
 - Money: M2 and seasonally adjusted monetary base (monthly)
 - Interest and exchange rates: overnight call rate, base discount/lending
   rate, and USD/JPY central rate
@@ -48,6 +56,10 @@ The GDP entries use the current 2020-base e-Stat tables. The real GDP and
 expenditure series are chain-volume measures; expenditure components should
 not be assumed to add exactly because chain-volume measures are not generally
 additive.
+Population values are absolute counts in thousands, not an index rescaled to a
+base year. The census reference identifies the estimate vintage; the segments
+join the source tables to provide one monthly series and do not apply a scale
+adjustment. The vintage-specific keys remain available to inspect each table.
 
 The common columns are `DATE`, `value`, `dataset_key`, `provider`,
 `series_code`, `unit`, `frequency`, and `seasonal_adjustment`. Provider
@@ -75,6 +87,9 @@ it.
 The packaged catalog is [estat_pandas/catalog.json](estat_pandas/catalog.json).
 Each entry fixes its provider, source identifiers and filters, classification
 codes and labels, unit, native frequency, and seasonal-adjustment status.
+Segmented e-Stat entries can explicitly join multiple tables into one logical
+series; their per-segment identifiers, classifications, and date boundaries
+are validated before data is returned.
 Catalog entries are validated before a provider is called.
 
 For example, an e-Stat entry pins the table and filters rather than relying on

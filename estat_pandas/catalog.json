@@ -461,6 +461,285 @@
         }
       }
     },
+    "JPN_POPULATION_TOTAL": {
+      "title": "全国総人口（国勢調査基準を接続した月次系列）",
+      "source": {
+        "provider": "estat",
+        "lang": "jp",
+        "segments": [
+          {
+            "stats_data_id": "0004029362",
+            "filters": {
+              "cdArea": "00000",
+              "cdCat01": "000",
+              "cdCat02": "001"
+            },
+            "start": "1990-10-01",
+            "end": "2015-09-01",
+            "classifications": {
+              "area": {
+                "code": "00000",
+                "label": "全国"
+              },
+              "cat01": {
+                "code": "000",
+                "label": "男女計"
+              },
+              "cat02": {
+                "code": "001",
+                "label": "総人口"
+              }
+            }
+          },
+          {
+            "stats_data_id": "0003446819",
+            "filters": {
+              "cdArea": "00000",
+              "cdCat02": "000",
+              "cdCat03": "01000",
+              "cdCat04": "001"
+            },
+            "start": "2015-10-01",
+            "end": "2020-09-01",
+            "classifications": {
+              "area": {
+                "code": "00000",
+                "label": "全国"
+              },
+              "cat02": {
+                "code": "000",
+                "label": "男女計"
+              },
+              "cat03": {
+                "code": "01000",
+                "label": "総数"
+              },
+              "cat04": {
+                "code": "001",
+                "label": "総人口"
+              }
+            }
+          },
+          {
+            "stats_data_id": "0003443840",
+            "filters": {
+              "cdArea": "00000",
+              "cdCat01": "01",
+              "cdCat02": "000",
+              "cdCat03": "01000",
+              "cdCat04": "001"
+            },
+            "start": "2020-10-01",
+            "end": "2025-09-01",
+            "classifications": {
+              "area": {
+                "code": "00000",
+                "label": "全国"
+              },
+              "cat01": {
+                "code": "01",
+                "label": "確定値"
+              },
+              "cat02": {
+                "code": "000",
+                "label": "男女計"
+              },
+              "cat03": {
+                "code": "01000",
+                "label": "総数"
+              },
+              "cat04": {
+                "code": "001",
+                "label": "総人口"
+              }
+            }
+          },
+          {
+            "stats_data_id": "0004055903",
+            "filters": {
+              "cdArea": "00000",
+              "cdCat01": "01",
+              "cdCat02": "000",
+              "cdCat03": "01000",
+              "cdCat04": "001"
+            },
+            "start": "2025-10-01",
+            "end": null,
+            "classifications": {
+              "area": {
+                "code": "00000",
+                "label": "全国"
+              },
+              "cat01": {
+                "code": "01",
+                "label": "確定値"
+              },
+              "cat02": {
+                "code": "000",
+                "label": "男女計"
+              },
+              "cat03": {
+                "code": "01000",
+                "label": "総数"
+              },
+              "cat04": {
+                "code": "001",
+                "label": "総人口"
+              }
+            }
+          }
+        ]
+      },
+      "unit": "千人",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {}
+    },
+    "JPN_POPULATION_TOTAL_1990_2015": {
+      "title": "全国総人口（1990年10月～2015年10月、月次）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004029362",
+        "filters": {
+          "cdArea": "00000",
+          "cdCat01": "000",
+          "cdCat02": "001"
+        },
+        "lang": "jp"
+      },
+      "unit": "千人",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "cat01": {
+          "code": "000",
+          "label": "男女計"
+        },
+        "cat02": {
+          "code": "001",
+          "label": "総人口"
+        }
+      }
+    },
+    "JPN_POPULATION_TOTAL_2015_BASE": {
+      "title": "全国総人口（2015年国勢調査基準、2015年10月～2020年10月、月次）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003446819",
+        "filters": {
+          "cdArea": "00000",
+          "cdCat02": "000",
+          "cdCat03": "01000",
+          "cdCat04": "001"
+        },
+        "lang": "jp"
+      },
+      "unit": "千人",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "cat02": {
+          "code": "000",
+          "label": "男女計"
+        },
+        "cat03": {
+          "code": "01000",
+          "label": "総数"
+        },
+        "cat04": {
+          "code": "001",
+          "label": "総人口"
+        }
+      }
+    },
+    "JPN_POPULATION_TOTAL_2020_BASE": {
+      "title": "全国総人口（2020年国勢調査基準、2020年10月以降、月次）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003443840",
+        "filters": {
+          "cdArea": "00000",
+          "cdCat01": "01",
+          "cdCat02": "000",
+          "cdCat03": "01000",
+          "cdCat04": "001"
+        },
+        "lang": "jp"
+      },
+      "unit": "千人",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "cat01": {
+          "code": "01",
+          "label": "確定値"
+        },
+        "cat02": {
+          "code": "000",
+          "label": "男女計"
+        },
+        "cat03": {
+          "code": "01000",
+          "label": "総数"
+        },
+        "cat04": {
+          "code": "001",
+          "label": "総人口"
+        }
+      }
+    },
+    "JPN_POPULATION_TOTAL_2025_BASE": {
+      "title": "全国総人口（2025年国勢調査基準、2025年10月以降、月次）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004055903",
+        "filters": {
+          "cdArea": "00000",
+          "cdCat01": "01",
+          "cdCat02": "000",
+          "cdCat03": "01000",
+          "cdCat04": "001"
+        },
+        "lang": "jp"
+      },
+      "unit": "千人",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "cat01": {
+          "code": "01",
+          "label": "確定値"
+        },
+        "cat02": {
+          "code": "000",
+          "label": "男女計"
+        },
+        "cat03": {
+          "code": "01000",
+          "label": "総数"
+        },
+        "cat04": {
+          "code": "001",
+          "label": "総人口"
+        }
+      }
+    },
     "JPN_M2": {
       "title": "Ｍ２／平／マネーストック",
       "source": {

@@ -38,6 +38,67 @@ class EStatProvider:
                 "ESTAT_APP_ID must be set to load an e-Stat dataset"
             )
 
+        if "segments" in dataset.source:
+            frames = []
+            for segment in dataset.source["segments"]:
+                segment_start = pd.Timestamp(segment["start"])
+                segment_end = (
+                    pd.Timestamp(segment["end"])
+                    if segment["end"] is not None
+                    else None
+                )
+                if start is not None:
+                    segment_start = max(segment_start, start)
+                if end is not None:
+                    segment_end = (
+                        min(segment_end, end)
+                        if segment_end is not None
+                        else end
+                    )
+                if segment_end is not None and segment_start > segment_end:
+                    continue
+
+                segment_source = {
+                    "provider": "estat",
+                    "stats_data_id": segment["stats_data_id"],
+                    "filters": segment["filters"],
+                    **{
+                        name: dataset.source[name]
+                        for name in ("lang", "timeout", "retry_count")
+                        if name in dataset.source
+                    },
+                }
+                segment_dataset = DatasetSpec(
+                    key=dataset.key,
+                    title=dataset.title,
+                    source=segment_source,
+                    unit=dataset.unit,
+                    frequency=dataset.frequency,
+                    seasonal_adjustment=dataset.seasonal_adjustment,
+                    classifications=segment["classifications"],
+                )
+                frame = self._fetch_single(
+                    segment_dataset,
+                    segment_start,
+                    segment_end,
+                    api_key,
+                )
+                frame["series_code"] = dataset.key
+                frames.append(frame)
+
+            if not frames:
+                return pd.DataFrame(columns=["DATE", "value", "series_code"])
+            return pd.concat(frames, ignore_index=True)
+
+        return self._fetch_single(dataset, start, end, api_key)
+
+    def _fetch_single(
+        self,
+        dataset: DatasetSpec,
+        start: pd.Timestamp | None,
+        end: pd.Timestamp | None,
+        api_key: str,
+    ) -> pd.DataFrame:
         source = dataset.source
         try:
             reader = EStatReader(

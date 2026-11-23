@@ -65,6 +65,90 @@ class ProviderTests(unittest.TestCase):
         )
         self.assertEqual(reader_class.call_args.kwargs["cdTab"], "3")
 
+    def test_estat_provider_joins_explicit_segments_as_one_series(self):
+        spec = DatasetSpec(
+            key="JPN_POPULATION_TOTAL",
+            title="National population",
+            source={
+                "provider": "estat",
+                "segments": [
+                    {
+                        "stats_data_id": "table-1",
+                        "filters": {"cdArea": "00000", "cdCat01": "000"},
+                        "start": "2024-01-01",
+                        "end": "2024-01-01",
+                        "classifications": {
+                            "area": {"code": "00000", "label": "全国"},
+                            "cat01": {"code": "000", "label": "男女計"},
+                        },
+                    },
+                    {
+                        "stats_data_id": "table-2",
+                        "filters": {"cdArea": "00000", "cdCat02": "000"},
+                        "start": "2024-02-01",
+                        "end": None,
+                        "classifications": {
+                            "area": {"code": "00000", "label": "全国"},
+                            "cat02": {"code": "000", "label": "男女計"},
+                        },
+                    },
+                ],
+            },
+            unit="千人",
+            frequency="monthly",
+            seasonal_adjustment="not_applicable",
+            classifications={},
+        )
+        frames = [
+            pd.DataFrame(
+                {
+                    "DATE": [pd.Timestamp("2024-01-01")],
+                    "$": ["124000"],
+                    "@area": ["00000"],
+                    "area_label": ["全国"],
+                    "@cat01": ["000"],
+                    "cat01_label": ["男女計"],
+                }
+            ),
+            pd.DataFrame(
+                {
+                    "DATE": [pd.Timestamp("2024-02-01")],
+                    "$": ["123900"],
+                    "@area": ["00000"],
+                    "area_label": ["全国"],
+                    "@cat02": ["000"],
+                    "cat02_label": ["男女計"],
+                }
+            ),
+        ]
+        with (
+            patch.dict("os.environ", {"ESTAT_APP_ID": "test-key"}),
+            patch("estat_pandas.providers.estat.EStatReader") as reader_class,
+        ):
+            reader_class.return_value.read.side_effect = frames
+            result = EStatProvider().fetch(
+                spec, pd.Timestamp("2024-01-01"), pd.Timestamp("2024-02-01")
+            )
+
+        self.assertEqual(
+            result["DATE"].tolist(),
+            [pd.Timestamp("2024-01-01"), pd.Timestamp("2024-02-01")],
+        )
+        self.assertEqual(result["series_code"].tolist(), [spec.key, spec.key])
+        self.assertEqual(reader_class.call_count, 2)
+        self.assertEqual(
+            [call.args[0] for call in reader_class.call_args_list],
+            ["table-1", "table-2"],
+        )
+        self.assertEqual(
+            [call.kwargs["start"] for call in reader_class.call_args_list],
+            [pd.Timestamp("2024-01-01"), pd.Timestamp("2024-02-01")],
+        )
+        self.assertEqual(
+            [call.kwargs["end"] for call in reader_class.call_args_list],
+            [pd.Timestamp("2024-01-01"), pd.Timestamp("2024-02-01")],
+        )
+
     def test_estat_provider_rejects_catalog_label_drift(self):
         frame = pd.DataFrame(
             {
