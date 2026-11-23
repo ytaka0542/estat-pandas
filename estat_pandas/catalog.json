@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "datasets": {
+    "JPN_GDP_NOMINAL_SA": {
+      "title": "国内総生産（支出側）名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "11"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "11",
+          "label": "国内総生産(支出側)"
+        }
+      }
+    },
+    "JPN_GDP_REAL_SA": {
+      "title": "国内総生産（支出側）実質・季節調整系列（2020暦年連鎖価格）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109750",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "11"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "11",
+          "label": "国内総生産(支出側)"
+        }
+      }
+    },
+    "JPN_CONSUMPTION_NOMINAL_SA": {
+      "title": "家計最終消費支出・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "13"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "13",
+          "label": "民間最終消費支出_家計最終消費支出"
+        }
+      }
+    },
+    "JPN_CONSUMPTION_REAL_SA": {
+      "title": "家計最終消費支出・実質・季節調整系列（2020暦年連鎖価格）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109750",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "13"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "13",
+          "label": "民間最終消費支出_家計最終消費支出"
+        }
+      }
+    },
+    "JPN_GROSS_FIXED_CAPITAL_FORMATION_NOMINAL_SA": {
+      "title": "総固定資本形成・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "31"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "31",
+          "label": "<参考>総固定資本形成"
+        }
+      }
+    },
+    "JPN_GROSS_FIXED_CAPITAL_FORMATION_REAL_SA": {
+      "title": "総固定資本形成・実質・季節調整系列（2020暦年連鎖価格）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109750",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "34"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "34",
+          "label": "<参考>総固定資本形成"
+        }
+      }
+    },
+    "JPN_GOVERNMENT_CONSUMPTION_NOMINAL_SA": {
+      "title": "政府最終消費支出・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "18"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "18",
+          "label": "政府最終消費支出"
+        }
+      }
+    },
+    "JPN_GOVERNMENT_CONSUMPTION_REAL_SA": {
+      "title": "政府最終消費支出・実質・季節調整系列（2020暦年連鎖価格）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109750",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "18"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "18",
+          "label": "政府最終消費支出"
+        }
+      }
+    },
+    "JPN_NET_EXPORTS_NOMINAL_SA": {
+      "title": "財貨・サービスの純輸出・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "21"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "21",
+          "label": "財貨・サービス_純輸出"
+        }
+      }
+    },
+    "JPN_NET_EXPORTS_REAL_SA": {
+      "title": "財貨・サービスの純輸出・実質・季節調整系列（2020暦年連鎖価格）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109750",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "21"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "21",
+          "label": "財貨・サービス_純輸出"
+        }
+      }
+    },
+    "JPN_CPI_ALL_YOY": {
+      "title": "全国 消費者物価指数（総合・前年同月比）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003427113",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "3",
+          "cdCat01": "0001"
+        },
+        "lang": "jp"
+      },
+      "unit": "%",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "3",
+          "label": "前年同月比"
+        },
+        "cat01": {
+          "code": "0001",
+          "label": "0001 総合"
+        }
+      }
+    },
+    "JPN_CPI_CORE_YOY": {
+      "title": "全国 消費者物価指数（生鮮食品を除く総合・前年同月比）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003427113",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "3",
+          "cdCat01": "0161"
+        },
+        "lang": "jp"
+      },
+      "unit": "%",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "3",
+          "label": "前年同月比"
+        },
+        "cat01": {
+          "code": "0161",
+          "label": "0161 生鮮食品を除く総合"
+        }
+      }
+    },
+    "JPN_CPI_CORE_CORE_YOY": {
+      "title": "全国 消費者物価指数（生鮮食品及びエネルギーを除く総合・前年同月比）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003427113",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "3",
+          "cdCat01": "0178"
+        },
+        "lang": "jp"
+      },
+      "unit": "%",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "3",
+          "label": "前年同月比"
+        },
+        "cat01": {
+          "code": "0178",
+          "label": "0178 生鮮食品及びエネルギーを除く総合"
+        }
+      }
+    },
+    "JPN_UNEMPLOYMENT_RATE": {
+      "title": "労働力人口比率，就業率及び完全失業率（2000年1-3月期～）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003009146",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "02",
+          "cdCat01": "000",
+          "cdCat02": "08",
+          "cdCat03": "0"
+        },
+        "lang": "jp"
+      },
+      "unit": "％",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "02",
+          "label": "率"
+        },
+        "cat01": {
+          "code": "000",
+          "label": "全産業"
+        },
+        "cat02": {
+          "code": "08",
+          "label": "完全失業者"
+        },
+        "cat03": {
+          "code": "0",
+          "label": "総数"
+        }
+      }
+    },
+    "JPN_EMPLOYMENT_RATE": {
+      "title": "労働力人口比率，就業率及び完全失業率（2000年1-3月期～）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003009146",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "02",
+          "cdCat01": "000",
+          "cdCat02": "13",
+          "cdCat03": "0"
+        },
+        "lang": "jp"
+      },
+      "unit": "％",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "02",
+          "label": "率"
+        },
+        "cat01": {
+          "code": "000",
+          "label": "全産業"
+        },
+        "cat02": {
+          "code": "13",
+          "label": "就業"
+        },
+        "cat03": {
+          "code": "0",
+          "label": "総数"
+        }
+      }
+    },
+    "JPN_LABOR_FORCE_PARTICIPATION_RATE": {
+      "title": "労働力人口比率，就業率及び完全失業率（2000年1-3月期～）",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003009146",
+        "filters": {
+          "cdArea": "00000",
+          "cdTab": "02",
+          "cdCat01": "000",
+          "cdCat02": "01",
+          "cdCat03": "0"
+        },
+        "lang": "jp"
+      },
+      "unit": "％",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "area": {
+          "code": "00000",
+          "label": "全国"
+        },
+        "table": {
+          "code": "02",
+          "label": "率"
+        },
+        "cat01": {
+          "code": "000",
+          "label": "全産業"
+        },
+        "cat02": {
+          "code": "01",
+          "label": "労働力人口"
+        },
+        "cat03": {
+          "code": "0",
+          "label": "総数"
+        }
+      }
+    },
+    "JPN_M2": {
+      "title": "Ｍ２／平／マネーストック",
+      "source": {
+        "provider": "boj",
+        "db": "MD02",
+        "series_code": "MAM1NAM2M2MO",
+        "lang": "jp"
+      },
+      "unit": "億円",
+      "frequency": "monthly",
+      "seasonal_adjustment": "not_seasonally_adjusted",
+      "classifications": {
+        "series": {
+          "code": "MAM1NAM2M2MO",
+          "label": "Ｍ２／平／マネーストック"
+        }
+      }
+    },
+    "JPN_MONETARY_BASE_SA": {
+      "title": "マネタリーベース平均残高（季節調整済）",
+      "source": {
+        "provider": "boj",
+        "db": "MD01",
+        "series_code": "MABS1AA11X12",
+        "lang": "jp"
+      },
+      "unit": "億円",
+      "frequency": "monthly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "series": {
+          "code": "MABS1AA11X12",
+          "label": "マネタリーベース平均残高＜季節調整済＞"
+        }
+      }
+    },
+    "JPN_CALL_RATE_OVERNIGHT": {
+      "title": "無担保コールＯ／Ｎ物レート（平均値・日次）",
+      "source": {
+        "provider": "boj",
+        "db": "FM01",
+        "series_code": "STRDCLUCON",
+        "lang": "jp"
+      },
+      "unit": "年％",
+      "frequency": "daily",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "database": {
+          "code": "FM01",
+          "label": "無担保コールＯ／Ｎ物レート（毎営業日）"
+        },
+        "series": {
+          "code": "STRDCLUCON",
+          "label": "無担保コールＯ／Ｎ物レート／平均値 日次／金利"
+        }
+      }
+    },
+    "JPN_BASE_DISCOUNT_RATE": {
+      "title": "基準割引率および基準貸付利率",
+      "source": {
+        "provider": "boj",
+        "db": "IR01",
+        "series_code": "MADR1Z@D",
+        "lang": "jp"
+      },
+      "unit": "年％",
+      "frequency": "daily",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "series": {
+          "code": "MADR1Z@D",
+          "label": "基準割引率および基準貸付利率"
+        }
+      }
+    },
+    "JPN_USD_JPY": {
+      "title": "東京市場 ドル・円 スポット 中心相場",
+      "source": {
+        "provider": "boj",
+        "db": "FM08",
+        "series_code": "FXERD05",
+        "lang": "jp"
+      },
+      "unit": "￥／＄",
+      "frequency": "daily",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "series": {
+          "code": "FXERD05",
+          "label": "東京市場　ドル・円　スポット　中心相場"
+        }
+      }
+    }
+  }
+}
