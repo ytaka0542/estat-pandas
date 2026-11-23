@@ -8,14 +8,17 @@ import estat_pandas as web
 
 def get_unemployment_rate(api_key):
     """労働力調査から完全失業率を取得"""
-    # 統計表ID: 0003009146
-    df = web.DataReader("0003009146", "estat", api_key=api_key)
-    # フィルタリング: 男女計(0), 完全失業率(08), 全産業(000)
-    df_u = df[
-        (df["@cat03"] == "0") &
-        (df["@cat02"] == "08") &
-        (df["@cat01"] == "000")
-    ].copy()
+    df_u = web.DataReader(
+        "0003009146",
+        "estat",
+        api_key=api_key,
+        cdArea="00000",
+        cdCat01="000",
+        cdCat02="08",
+        cdCat03="0",
+        expected_unit="％",
+        expected_period_type="quarter",
+    )
 
     # 数値変換とソート
     df_u["unemployment"] = pd.to_numeric(df_u["$"], errors="coerce")
