@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -26,8 +27,15 @@ _SEASONAL_ADJUSTMENTS = {
 }
 _SOURCE_FIELDS = {
     "estat": {
-        "required": {"provider", "stats_data_id", "filters"},
-        "optional": {"lang", "timeout", "retry_count"},
+        "required": {"provider"},
+        "optional": {
+            "stats_data_id",
+            "filters",
+            "segments",
+            "lang",
+            "timeout",
+            "retry_count",
+        },
     },
     "boj": {
         "required": {"provider", "db", "series_code"},
@@ -69,6 +77,121 @@ class DatasetSpec:
 def _require_string(value, field, context):
     if not isinstance(value, str) or not value.strip():
         raise CatalogError(f"{context}.{field} must be a non-empty string")
+
+
+def _validate_estat_selection(stats_data_id, filters, classifications, context):
+    _require_string(stats_data_id, "stats_data_id", context)
+    if not isinstance(filters, dict) or not filters:
+        raise CatalogError(f"{context}.filters must be a non-empty object")
+    if any(
+        not isinstance(key, str) or not isinstance(value, str)
+        for key, value in filters.items()
+    ):
+        raise CatalogError(f"{context}.filters keys and values must be strings")
+
+    filter_classifications = {
+        "cdArea": "area",
+        "cdTab": "table",
+        **{
+            f"cdCat{number:02d}": f"cat{number:02d}"
+            for number in range(1, 16)
+        },
+    }
+    for parameter, name in filter_classifications.items():
+        if parameter not in filters:
+            continue
+        classification = classifications.get(name)
+        if classification is None:
+            raise CatalogError(
+                f"{context}.classifications.{name} is required by "
+                f"filter {parameter}"
+            )
+        if classification["code"] != filters[parameter]:
+            raise CatalogError(
+                f"{context}.classifications.{name}.code must match "
+                f"filters.{parameter}"
+            )
+
+
+def _validate_estat_segments(segments, frequency, context):
+    if not isinstance(segments, list) or not segments:
+        raise CatalogError(f"{context}.segments must be a non-empty array")
+
+    previous_end = None
+    for index, segment in enumerate(segments):
+        segment_context = f"{context}.segments[{index}]"
+        required = {
+            "stats_data_id",
+            "filters",
+            "start",
+            "end",
+            "classifications",
+        }
+        if not isinstance(segment, dict) or set(segment) != required:
+            raise CatalogError(
+                f"{segment_context} must contain {sorted(required)} only"
+            )
+        classifications = segment["classifications"]
+        if not isinstance(classifications, dict):
+            raise CatalogError(
+                f"{segment_context}.classifications must be an object"
+            )
+        for name, classification in classifications.items():
+            if (
+                not isinstance(name, str)
+                or not isinstance(classification, dict)
+                or set(classification) != {"code", "label"}
+            ):
+                raise CatalogError(
+                    f"{segment_context}.classifications has an invalid entry"
+                )
+            _require_string(
+                classification["code"], "code", f"{segment_context}.{name}"
+            )
+            _require_string(
+                classification["label"], "label", f"{segment_context}.{name}"
+            )
+        _validate_estat_selection(
+            segment["stats_data_id"],
+            segment["filters"],
+            classifications,
+            segment_context,
+        )
+
+        start_value = segment["start"]
+        end_value = segment["end"]
+        try:
+            start_date = date.fromisoformat(start_value)
+            end_date = date.fromisoformat(end_value) if end_value is not None else None
+        except (TypeError, ValueError) as error:
+            raise CatalogError(
+                f"{segment_context}.start and end must be ISO dates"
+            ) from error
+        if start_date.isoformat() != start_value or (
+            end_value is not None and end_date.isoformat() != end_value
+        ):
+            raise CatalogError(
+                f"{segment_context}.start and end must use YYYY-MM-DD format"
+            )
+        if end_date is not None and start_date > end_date:
+            raise CatalogError(f"{segment_context}.start must not follow end")
+        if previous_end is None and index > 0:
+            raise CatalogError("only the final e-Stat segment may have an open end")
+        if previous_end is not None and start_date <= previous_end:
+            raise CatalogError("e-Stat segments must be ordered and non-overlapping")
+        if previous_end is not None and frequency == "monthly":
+            next_month = previous_end.month % 12 + 1
+            next_year = previous_end.year + (previous_end.month == 12)
+            if start_date != date(next_year, next_month, 1):
+                raise CatalogError("monthly e-Stat segments must be contiguous")
+        if frequency == "monthly" and (
+            start_date.day != 1
+            or (end_date is not None and end_date.day != 1)
+        ):
+            raise CatalogError(
+                f"{segment_context} monthly bounds must be first-of-month dates"
+            )
+        previous_end = end_date
 
 
 def _validate_dataset(key, raw):
@@ -148,41 +271,32 @@ def _validate_dataset(key, raw):
         raise CatalogError(f"{context}.source.timeout must be greater than zero")
 
     if provider == "estat":
-        _require_string(source["stats_data_id"], "stats_data_id", context)
-        filters = source["filters"]
-        if not isinstance(filters, dict) or not filters:
-            raise CatalogError(f"{context}.source.filters must be a non-empty object")
-        if any(
-            not isinstance(key, str) or not isinstance(value, str)
-            for key, value in filters.items()
-        ):
-            raise CatalogError(
-                f"{context}.source.filters keys and values must be strings"
+        has_single_selection = "stats_data_id" in source or "filters" in source
+        if "segments" in source:
+            if has_single_selection:
+                raise CatalogError(
+                    f"{context}.source must use either filters or segments"
+                )
+            if classifications:
+                raise CatalogError(
+                    f"{context}.classifications must be empty for segmented "
+                    "e-Stat sources"
+                )
+            _validate_estat_segments(
+                source["segments"], raw["frequency"], f"{context}.source"
             )
-        filter_classifications = {
-            "cdArea": "area",
-            "cdTab": "table",
-        }
-        filter_classifications.update(
-            {
-                f"cdCat{number:02d}": f"cat{number:02d}"
-                for number in range(1, 16)
-            }
-        )
-        for parameter, name in filter_classifications.items():
-            if parameter not in filters:
-                continue
-            classification = classifications.get(name)
-            if classification is None:
+        else:
+            if not {"stats_data_id", "filters"}.issubset(source):
                 raise CatalogError(
-                    f"{context}.classifications.{name} is required by "
-                    f"source filter {parameter}"
+                    f"{context}.source must contain stats_data_id and filters "
+                    "or segments"
                 )
-            if classification["code"] != filters[parameter]:
-                raise CatalogError(
-                    f"{context}.classifications.{name}.code must match "
-                    f"source.filters.{parameter}"
-                )
+            _validate_estat_selection(
+                source["stats_data_id"],
+                source["filters"],
+                classifications,
+                f"{context}.source",
+            )
         lang = source.get("lang", "jp")
         if not isinstance(lang, str) or lang not in {"jp", "en"}:
             raise CatalogError(f"{context}.source.lang must be 'jp' or 'en'")
