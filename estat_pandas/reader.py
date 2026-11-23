@@ -4,8 +4,10 @@ import pandas as pd
 import requests
 from pandas_datareader.base import _BaseReader
 
+from .errors import ProviderError
 
-class EStatAPIError(RuntimeError):
+
+class EStatAPIError(ProviderError):
     """Raised when e-Stat cannot return a valid response for a request."""
 
 
