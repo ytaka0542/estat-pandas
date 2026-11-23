@@ -202,6 +202,11 @@ set `ESTAT_LIVE_LINK_CHECK=1` and run `./test.sh`. The test resolves the latest
 workbook through e-Stat's catalog API and downloads it; it reads `ESTAT_APP_ID`
 from the environment or the local `.env` file.
 
+GitHub Actions runs `./test.sh` for pull requests and at 09:17 JST on the first
+day of each month. The monthly run also performs the live link check and
+requires the repository Actions secret `ESTAT_APP_ID`; results are available
+in the Actions run and PR checks.
+
 Please check the [e-Stat API terms of use](https://www.e-stat.go.jp/api/api-info/e-stat-usage-rules)
 when using e-Stat data.
 

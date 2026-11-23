@@ -6,6 +6,7 @@ services:
     stdin_open: true
     environment:
       ESTAT_LIVE_LINK_CHECK: ${ESTAT_LIVE_LINK_CHECK:-0}
+      ESTAT_APP_ID: ${ESTAT_APP_ID:-}
     volumes:
       - .:/app
     # dns と network_mode は同じ階層（左端を揃える）にする必要があります
