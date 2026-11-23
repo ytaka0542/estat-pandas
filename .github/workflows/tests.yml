@@ -1,0 +1,21 @@
+name: Tests
+
+on:
+  pull_request:
+  schedule:
+    - cron: "17 0 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test.sh
+    runs-on: ubuntu-latest
+    env:
+      ESTAT_LIVE_LINK_CHECK: ${{ github.event_name == 'schedule' && '1' || '0' }}
+      ESTAT_APP_ID: ${{ github.event_name == 'schedule' && secrets.ESTAT_APP_ID || '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: ./test.sh

@@ -44,7 +44,8 @@ Registered series cover:
   seasonally adjusted, quarterly)
 - Prices: headline CPI, CPI excluding fresh food, and CPI excluding fresh food
   and energy (year-over-year, monthly)
-- Labor: unemployment, employment, and labor-force participation rates
+- Labor: unemployment rate (original monthly from 2000 and seasonally adjusted
+  monthly from 1953), plus employment and labor-force participation rates
   (quarterly)
 - Population: national total population (`JPN_POPULATION_TOTAL`), with monthly
   census-base vintages joined at explicit, non-overlapping date boundaries
@@ -126,9 +127,12 @@ Supported frequency values are `daily`, `monthly`, `quarterly`, `annual`,
 - **Official CSV** entries must specify an HTTPS URL, series code, date/value
   columns, date format, encoding, and delimiter. If classifications are
   present, the exact CSV column for each classification must also be declared.
-  The provider reads CSV only; it does not infer Excel or HTML layouts. For a
-  non-flat source, add a dedicated parser for that source instead of a generic
-  format guesser.
+  The provider reads CSV only and does not infer layouts.
+- **e-Stat Excel** resolves the latest workbook through `getDataCatalog` each
+  time it loads a series, so catalog entries do not pin a release-specific file
+  URL. Entries explicitly declare the sheet, skipped header rows, and
+  zero-based year, month, and value column indexes. `.xlsx` support uses
+  `openpyxl`.
 
 To register an official CSV series, add a catalog entry with a source such as:
 
@@ -192,6 +196,16 @@ From this directory, run:
 
 This runs offline unit tests and needs neither an e-Stat API key nor live
 provider access. Docker Compose is used by the script.
+
+For an opt-in live check of the seasonally adjusted unemployment workbook,
+set `ESTAT_LIVE_LINK_CHECK=1` and run `./test.sh`. The test resolves the latest
+workbook through e-Stat's catalog API and downloads it; it reads `ESTAT_APP_ID`
+from the environment or the local `.env` file.
+
+GitHub Actions runs `./test.sh` for pull requests and at 09:17 JST on the first
+day of each month. The monthly run also performs the live link check and
+requires the repository Actions secret `ESTAT_APP_ID`; results are available
+in the Actions run and PR checks.
 
 Please check the [e-Stat API terms of use](https://www.e-stat.go.jp/api/api-info/e-stat-usage-rules)
 when using e-Stat data.
