@@ -251,6 +251,506 @@
         }
       }
     },
+    "JPN_PRIVATE_HOUSING_INVESTMENT_NOMINAL_SA": {
+      "title": "民間住宅投資・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "15"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "15",
+          "label": "民間住宅"
+        }
+      }
+    },
+    "JPN_PRIVATE_BUSINESS_INVESTMENT_NOMINAL_SA": {
+      "title": "民間企業設備投資・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "16"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "16",
+          "label": "民間企業設備"
+        }
+      }
+    },
+    "JPN_PRIVATE_INVENTORY_CHANGE_NOMINAL_SA": {
+      "title": "民間在庫変動・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "17"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "17",
+          "label": "民間在庫変動"
+        }
+      }
+    },
+    "JPN_PUBLIC_GROSS_FIXED_CAPITAL_FORMATION_NOMINAL_SA": {
+      "title": "公的固定資本形成・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "19"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "19",
+          "label": "公的固定資本形成"
+        }
+      }
+    },
+    "JPN_PUBLIC_INVENTORY_CHANGE_NOMINAL_SA": {
+      "title": "公的在庫変動・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "20"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "20",
+          "label": "公的在庫変動"
+        }
+      }
+    },
+    "JPN_EXPORTS_NOMINAL_SA": {
+      "title": "財貨・サービスの輸出・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "22"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "22",
+          "label": "財貨・サービス_輸出"
+        }
+      }
+    },
+    "JPN_IMPORTS_NOMINAL_SA": {
+      "title": "財貨・サービスの輸入・名目・季節調整系列",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0003109785",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "23"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "quarterly",
+      "seasonal_adjustment": "seasonally_adjusted",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "23",
+          "label": "財貨・サービス_輸入"
+        }
+      }
+    },
+    "JPN_GDP_NOMINAL_FY": {
+      "title": "国内総生産（支出側）名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "47"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "47",
+          "label": "５．国内総生産（支出側）(1+2+3+4)"
+        }
+      }
+    },
+    "JPN_HOUSEHOLD_CONSUMPTION_NOMINAL_FY": {
+      "title": "家計最終消費支出・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "12"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "12",
+          "label": "（１）家計最終消費支出"
+        }
+      }
+    },
+    "JPN_HOUSEHOLD_CONSUMPTION_REAL_FY": {
+      "title": "家計最終消費支出・実質（2020暦年連鎖価格）・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049752",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "12"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "12",
+          "label": "（１）家計最終消費支出"
+        }
+      }
+    },
+    "JPN_DISPOSABLE_INCOME_NOMINAL_FY": {
+      "title": "家計可処分所得（純）・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049857",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "16"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "16",
+          "label": "4.3可処分所得（純）(2.4)"
+        }
+      }
+    },
+    "JPN_PRIVATE_HOUSING_INVESTMENT_NOMINAL_FY": {
+      "title": "民間住宅投資・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "25"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "25",
+          "label": "（ａ）住宅"
+        }
+      }
+    },
+    "JPN_PRIVATE_BUSINESS_INVESTMENT_NOMINAL_FY": {
+      "title": "民間企業設備投資・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "26"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "26",
+          "label": "（ｂ）企業設備"
+        }
+      }
+    },
+    "JPN_PRIVATE_INVENTORY_CHANGE_NOMINAL_FY": {
+      "title": "民間企業在庫変動・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "32"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "32",
+          "label": "ａ．民間企業"
+        }
+      }
+    },
+    "JPN_GOVERNMENT_CONSUMPTION_NOMINAL_FY": {
+      "title": "政府最終消費支出・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "19"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "19",
+          "label": "２．政府最終消費支出"
+        }
+      }
+    },
+    "JPN_PUBLIC_GROSS_FIXED_CAPITAL_FORMATION_NOMINAL_FY": {
+      "title": "公的総固定資本形成・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "27"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "27",
+          "label": "ｂ．公的"
+        }
+      }
+    },
+    "JPN_PUBLIC_INVENTORY_CHANGE_NOMINAL_FY": {
+      "title": "公的在庫変動・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "37"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "37",
+          "label": "ｂ．公的"
+        }
+      }
+    },
+    "JPN_NET_EXPORTS_NOMINAL_FY": {
+      "title": "財貨・サービスの純輸出・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "40"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "40",
+          "label": "４．財貨・サービスの純輸出"
+        }
+      }
+    },
+    "JPN_EXPORTS_NOMINAL_FY": {
+      "title": "財貨・サービスの輸出・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "41"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "41",
+          "label": "（１）財貨・サービスの輸出"
+        }
+      }
+    },
+    "JPN_IMPORTS_NOMINAL_FY": {
+      "title": "財貨・サービスの輸入・名目・年度",
+      "source": {
+        "provider": "estat",
+        "stats_data_id": "0004049747",
+        "filters": {
+          "cdTab": "11",
+          "cdCat01": "44"
+        },
+        "lang": "jp"
+      },
+      "unit": "10億円",
+      "frequency": "fiscal_year",
+      "seasonal_adjustment": "not_applicable",
+      "classifications": {
+        "table": {
+          "code": "11",
+          "label": "金額"
+        },
+        "cat01": {
+          "code": "44",
+          "label": "（２）（控除）財貨・サービスの輸入"
+        }
+      }
+    },
     "JPN_CPI_ALL_YOY": {
       "title": "全国 消費者物価指数（総合・前年同月比）",
       "source": {
